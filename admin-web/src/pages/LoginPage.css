@@ -1,0 +1,167 @@
+.login-root {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 420px at 85% 10%, rgba(255, 193, 7, 0.55), transparent 55%),
+    radial-gradient(700px 500px at 5% 90%, rgba(17, 33, 91, 0.35), transparent 50%),
+    linear-gradient(160deg, #ffd54f 0%, #ffc107 42%, #f9a825 100%);
+}
+
+.login-root::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    repeating-linear-gradient(
+      -18deg,
+      transparent,
+      transparent 28px,
+      rgba(17, 33, 91, 0.035) 28px,
+      rgba(17, 33, 91, 0.035) 29px
+    );
+  pointer-events: none;
+  animation: loginDrift 18s linear infinite;
+}
+
+@keyframes loginDrift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(40px);
+  }
+}
+
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0;
+  padding: 32px 26px 28px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 33, 91, 0.08);
+  box-shadow: 0 24px 60px rgba(17, 33, 91, 0.22);
+  backdrop-filter: blur(10px);
+  animation: loginCardIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes loginCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.login-brand {
+  margin: 0;
+  text-align: center;
+  color: #11215b;
+  font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.login-sub {
+  text-align: center;
+  color: rgba(17, 33, 91, 0.7);
+  font-size: 0.92rem;
+  margin: 10px 0 26px;
+}
+
+.login-card label {
+  display: block;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #11215b;
+  font-size: 0.85rem;
+}
+
+.login-card input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(17, 33, 91, 0.18);
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: #11215b;
+  box-shadow: 0 0 0 3px rgba(17, 33, 91, 0.12);
+}
+
+.login-card button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #1a2f75, #11215b);
+  color: #ffc107;
+  font-family: 'Cairo', 'IBM Plex Sans Arabic', sans-serif;
+  font-weight: 700;
+  font-size: 1.02rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(17, 33, 91, 0.28);
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.login-card button:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.login-card button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.login-card button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-status {
+  color: #11215b;
+  font-size: 0.9rem;
+  margin: 8px 0 0;
+  text-align: center;
+}
+
+.login-err {
+  color: #b00020;
+  font-size: 0.9rem;
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  background: #ffebee;
+  border-radius: 10px;
+  border: 1px solid #ef9a9a;
+  animation: loginCardIn 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-root::before,
+  .login-card,
+  .login-err {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "kicker": "تنقّل بثقة",
+    "title": "GS Taxi رحلتك تبدأ بلمسة",
+    "lead": "اطلب سيارة بسرعة، تابع السائق لحظة بلحظة، وادفع بسهولة — خدمة تكسي عصرية مصمّمة لمدينتك."
+  },
+  "carousel": [
+    {
+      "id": "c1",
+      "src": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=2000&q=80",
+      "kicker": "تنقّل بثقة",
+      "title": "GS Taxi رحلتك تبدأ بلمسة",
+      "lead": "اطلب سيارة بسرعة، تابع السائق لحظة بلحظة، وادفع بسهولة."
+    },
+    {
+      "id": "c2",
+      "src": "https://images.unsplash.com/photo-1511527661048-7fe73d85e9a4?auto=format&fit=crop&w=2000&q=80",
+      "kicker": "خدمة أوضح",
+      "title": "سائقون معتمدون في مدينتك",
+      "lead": "تابع موقع السيارة لحظة بلحظة واصل إلى وجهتك بأمان."
+    },
+    {
+      "id": "c3",
+      "src": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=2000&q=80",
+      "kicker": "جاهز للانطلاق",
+      "title": "حمّل التطبيق الآن",
+      "lead": "متوفر على Google Play و App Store، أو حمّل ملف الأندرويد مباشرة."
+    }
+  ],
+  "news": [
+    {
+      "id": "n1",
+      "title": "تحديث التطبيق بإصدار جديد",
+      "date": "أغسطس 2026",
+      "text": "تحسينات على الخريطة وتجربة الحجز الفوري لتصل أسرع وأكثر دقة.",
+      "image": "https://images.unsplash.com/photo-1485291571150-772bcfc10da5?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": "n2",
+      "title": "توسيع مناطق الخدمة",
+      "date": "يوليو 2026",
+      "text": "إضافة أحياء جديدة لشبكة السائقين المعتمدين مع دعم أفضل للرحلات المسائية.",
+      "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "id": "n3",
+      "title": "شراكات مع السائقين المحليين",
+      "date": "يونيو 2026",
+      "text": "برامج دعم واشتراكات مرنة تساعد السائقين على العمل بثبات وأمان.",
+      "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=900&q=80"
+    }
+  ],
+  "ads": [
+    {
+      "id": "a1",
+      "tag": "عرض",
+      "title": "خصم على أول ثلاث رحلات",
+      "text": "للمشتركين الجدد عبر التطبيق — لفترة محدودة.",
+      "date": "حتى نهاية الشهر"
+    },
+    {
+      "id": "a2",
+      "tag": "سائقون",
+      "title": "انضم لأسطول GS Taxi",
+      "text": "تسجيل سهل، دعم فني، وفرص رحلات يومية في مناطق التغطية.",
+      "date": "مفتوح الآن"
+    },
+    {
+      "id": "a3",
+      "tag": "تنبيه",
+      "title": "حدّث تطبيقك لأحدث نسخة",
+      "text": "استقرار أفضل وميزات أمان محدّثة — رابط التحميل أدناه.",
+      "date": "مهم"
+    }
+  ],
+  "stores": {
+    "play": "https://play.google.com/store/apps/details?id=com.syriataxi.syriatax",
+    "apple": "https://apps.apple.com",
+    "apk": "https://gstaxi.online/downloads/gstaxi.apk"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/gstaxi2026",
+    "facebook": "https://www.facebook.com/profile.php?id=61568816821576",
+    "whatsapp": "https://wa.me/963944767773",
+    "telegram": ""
+  },
+  "contact": {
+    "phone": "0944767773",
+    "phoneTel": "+963944767773",
+    "email": "taxi2026.sy@gmail.com",
+    "address": "المزة شرقية، بعد أفران الاحتياطية بـ 300م، بناء مسعود"
+  }
+}

@@ -1,0 +1,3 @@
+GS Taxi site admin v4
+2026-08-16
+Carousel delete disabled. Image replace + persist_content.

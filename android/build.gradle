@@ -1,0 +1,105 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+def configureJavaCompileQuiet(Project project) {
+    project.tasks.withType(JavaCompile).configureEach { task ->
+        task.sourceCompatibility = JavaVersion.VERSION_17.toString()
+        task.targetCompatibility = JavaVersion.VERSION_17.toString()
+        try {
+            task.options.warnings = false
+        } catch (Throwable ignored) {
+        }
+
+        def already = task.options.compilerArgumentProviders.any {
+            it.toString().contains('SyriaTaxiQuietJavac')
+        }
+        if (!already) {
+            task.options.compilerArgumentProviders.add(new CommandLineArgumentProvider() {
+                @Override
+                String toString() {
+                    return 'SyriaTaxiQuietJavac'
+                }
+
+                @Override
+                Iterable<String> asArguments() {
+                    return [
+                            '-nowarn',
+                            '-Xlint:none',
+                            '-Xlint:-options',
+                            '-Xlint:-deprecation',
+                            '-Xlint:-unchecked',
+                    ]
+                }
+            })
+        }
+
+        task.doFirst {
+            task.sourceCompatibility = JavaVersion.VERSION_17.toString()
+            task.targetCompatibility = JavaVersion.VERSION_17.toString()
+            try {
+                task.options.warnings = false
+            } catch (Throwable ignored) {
+            }
+            task.logging.captureStandardError(LogLevel.INFO)
+        }
+    }
+
+    project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { task ->
+        task.kotlinOptions.jvmTarget = '17'
+    }
+}
+
+def applyJava17ToAndroid(Project project) {
+    def androidExt = project.extensions.findByName('android')
+    if (androidExt == null) return
+    try {
+        androidExt.compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+    } catch (Throwable ignored) {
+    }
+}
+
+subprojects { sub ->
+    configureJavaCompileQuiet(sub)
+
+    sub.pluginManager.withPlugin('com.android.library') {
+        applyJava17ToAndroid(sub)
+    }
+    sub.pluginManager.withPlugin('com.android.application') {
+        applyJava17ToAndroid(sub)
+    }
+
+    if (sub.state.executed) {
+        applyJava17ToAndroid(sub)
+    } else {
+        sub.afterEvaluate {
+            applyJava17ToAndroid(sub)
+            configureJavaCompileQuiet(sub)
+        }
+    }
+}
+
+gradle.projectsEvaluated {
+    rootProject.subprojects.each { sub ->
+        configureJavaCompileQuiet(sub)
+        applyJava17ToAndroid(sub)
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
+}

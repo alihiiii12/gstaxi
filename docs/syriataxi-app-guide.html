@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>آلية عمل تطبيق سوريا تاكسي — GS Taxi</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: #11215B;
+      background: #f4f6fb;
+      line-height: 1.75;
+      font-size: 11.5pt;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 12px;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      box-shadow: 0 8px 32px rgba(17, 33, 91, 0.08);
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    /* ── Cover ── */
+    .cover {
+      background: linear-gradient(145deg, #11215B 0%, #1a3070 45%, #11215B 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 48px 40px;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      left: -80px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(255, 193, 7, 0.12);
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      bottom: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 193, 7, 0.08);
+    }
+
+    .cover-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 24px;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+
+    .cover h1 {
+      font-size: 32pt;
+      font-weight: 800;
+      color: #FFC107;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover .subtitle {
+      font-size: 16pt;
+      font-weight: 300;
+      opacity: 0.92;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-badge {
+      background: #FFC107;
+      color: #11215B;
+      font-weight: 700;
+      font-size: 13pt;
+      padding: 12px 32px;
+      border-radius: 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-footer {
+      position: absolute;
+      bottom: 36px;
+      font-size: 10pt;
+      opacity: 0.65;
+      z-index: 1;
+    }
+
+    /* ── Content pages ── */
+    .content { padding: 28px 36px 40px; }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid #FFC107;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .page-header img { height: 36px; }
+
+    .page-header .brand {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #11215B;
+    }
+
+    .page-header .page-num {
+      font-size: 10pt;
+      color: #888;
+    }
+
+    h2 {
+      font-size: 18pt;
+      color: #11215B;
+      margin: 20px 0 14px;
+      padding-right: 14px;
+      border-right: 5px solid #FFC107;
+    }
+
+    h3 {
+      font-size: 13pt;
+      color: #1a3070;
+      margin: 16px 0 8px;
+    }
+
+    p { margin-bottom: 10px; text-align: justify; }
+
+    .lead {
+      font-size: 12pt;
+      color: #334155;
+      background: linear-gradient(90deg, #FFF6D6, #fff);
+      border-right: 4px solid #FFC107;
+      padding: 14px 16px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      border-top: 4px solid #FFC107;
+    }
+
+    .card.navy { border-top-color: #11215B; background: #f0f4ff; }
+
+    .card h4 {
+      font-size: 11pt;
+      color: #11215B;
+      margin-bottom: 6px;
+    }
+
+    .card p { font-size: 10pt; margin: 0; color: #475569; }
+
+    .card .icon {
+      font-size: 22pt;
+      margin-bottom: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: 10pt;
+    }
+
+    th {
+      background: #11215B;
+      color: #FFC107;
+      padding: 10px 12px;
+      text-align: right;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin: 14px 0;
+      justify-content: center;
+    }
+
+    .flow-step {
+      background: #11215B;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 9.5pt;
+      font-weight: 600;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .flow-step.highlight { background: #FFC107; color: #11215B; }
+
+    .flow-arrow {
+      color: #FFC107;
+      font-size: 16pt;
+      font-weight: bold;
+    }
+
+    .status-chain {
+      background: linear-gradient(135deg, #11215B, #1e3a8a);
+      color: #fff;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 14px 0;
+      font-size: 10pt;
+      text-align: center;
+      line-height: 2;
+    }
+
+    .status-chain span {
+      background: rgba(255,193,7,0.2);
+      border: 1px solid #FFC107;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin: 2px;
+      display: inline-block;
+      font-weight: 600;
+      color: #FFC107;
+    }
+
+    .status-chain .final { background: #22C55E; border-color: #22C55E; color: #fff; }
+    .status-chain .removed { background: #EF4444; border-color: #EF4444; color: #fff; }
+
+    .formula {
+      background: #11215B;
+      color: #FFC107;
+      font-family: Consolas, monospace;
+      padding: 14px 18px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 11pt;
+      margin: 12px 0;
+      font-weight: 600;
+    }
+
+    .colors {
+      display: flex;
+      gap: 16px;
+      margin: 14px 0;
+    }
+
+    .color-swatch {
+      flex: 1;
+      text-align: center;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    .color-swatch .swatch {
+      height: 48px;
+    }
+
+    .color-swatch .label {
+      padding: 8px;
+      font-size: 9pt;
+      background: #f8fafc;
+    }
+
+    ul { margin: 8px 20px 14px 0; }
+    li { margin-bottom: 5px; font-size: 10.5pt; }
+
+    .footer-note {
+      position: absolute;
+      bottom: 20px;
+      left: 36px;
+      right: 36px;
+      font-size: 8.5pt;
+      color: #94a3b8;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #FFC107;
+      color: #11215B;
+      font-size: 8.5pt;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    @media print {
+      body { background: #fff; }
+      .page { box-shadow: none; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- صفحة الغلاف -->
+<div class="page cover">
+  <img class="cover-logo" src="../images/logo.png" alt="GS Taxi" onerror="this.style.display='none'" />
+  <h1>سوريا تاكسي</h1>
+  <div class="subtitle">GS Taxi — دليل آلية عمل التطبيق</div>
+  <div class="cover-badge">منصة حجز تاكسي ذكية</div>
+  <div class="cover-footer">وثيقة تقنية — يوليو 2026 &nbsp;|&nbsp; gstaxi.online</div>
+</div>
+
+<!-- صفحة 2: نظرة عامة -->
+<div class="page">
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">🚕 سوريا تاكسي — GS Taxi</div>
+      <div class="page-num">٢</div>
+    </div>
+
+    <h2>نظرة عامة على المنصة</h2>
+    <div class="lead">
+      تطبيق <strong>سوريا تاكسي</strong> منصة متكاملة لربط الركاب بالسائقين، مبنية بتقنية Flutter للهواتف
+      وخادم Laravel للعمليات الخلفية. يدعم الحجز الفوري والمسبق، التتبع الحي على الخريطة،
+      العداد الذكي، ولوحة إدارة شاملة.
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="icon">👤</div>
+        <h4>الراكب (زبون)</h4>
+        <p>يحجز رحلاته، يتتبع السائق، يؤكد الوصول، ويُقيّم الرحلة بعد الانتهاء.</p>
+      </div>
+      <div class="card navy">
+        <div class="icon">🚗</div>
+        <h4>السائق</h4>
+        <p>يتصل بالشبكة، يستقبل الطلبات، ينفّذ الرحلة، ويدير العداد الحر أو عداد التطبيق.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h4>الإدارة</h4>
+        <p>تُدير السائقين، الطلبات، التسعير، التقارير، تنبيهات SOS، والخصومات.</p>
+      </div>
+    </div>
+
+    <h3>المكوّنات التقنية</h3>
+    <table>
+      <tr><th>المكوّن</th><th>التفاصيل</th></tr>
+      <tr><td>تطبيق الهاتف</td><td>Flutter — أندرويد و iOS — واجهة عربية RTL</td></tr>
+      <tr><td>الخادم</td><td>Laravel REST API — gstaxi.online/api</td></tr>
+      <tr><td>الخريطة والمسارات</td><td>Google Maps + OSRM لحساب المسافة والمدة</td></tr>
+      <tr><td>الإشعارات</td><td>Firebase Cloud Messaging (FCM)</td></tr>
+      <tr><td>العملة</td><td>الليرة السورية (ل.س) — الدفع نقداً عند الوصول</td></tr>
+    </table>
+
+    <h3>الهوية البصرية</h3>
+    <div class="colors">
+      <div class="color-swatch">
+        <div class="swatch" style="background:#FFC107"></div>
+        <div class="label"><strong>الأساسي</strong><br>#FFC107 عنبري</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#11215B"></div>
+        <div class="label"><strong>الثانوي</strong><br>#11215B كحلي</div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch" style="background:#FFF6D6"></div>
+        <div class="label"><strong>الخلفية</strong><br>#FFF6D6 كريمي</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">سوريا تاكسي — GS Taxi &nbsp;|&nbsp; وثيقة داخلية</div>
+</div>
+
+<!-- صفحة 3: مسار الراكب -->
+<div class="page">
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">🚕 سوريا تاكسي — GS Taxi</div>
+      <div class="page-num">٣</div>
+    </div>
+
+    <h2>مسار الراكب — من التسجيل إلى إنهاء الرحلة</h2>
+
+    <h3>١. التسجيل وتسجيل الدخول</h3>
+    <ul>
+      <li>التسجيل: الاسم + رقم سوري (09xxxxxxxx) + كلمة مرور + تأكيد OTP</li>
+      <li>تسجيل الدخول: رقم الهاتف + كلمة المرور</li>
+      <li>استعادة كلمة المرور عبر OTP</li>
+    </ul>
+
+    <h3>٢. أنواع الحجز</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>🚀 رحلة فورية <span class="tag">Immediate</span></h4>
+        <p>يُحدَّد الانطلاق والوجهة وفئة السيارة، ثم يُرسَل الطلب لجميع السائقين القريبين المتصلين. أول سائق يقبل يفوز بالرحلة.</p>
+      </div>
+      <div class="card navy">
+        <h4>📅 حجز مسبق <span class="tag">Schedual</span></h4>
+        <p>يُختار سائق محدد + موعد الرحلة. يُرسل تذكير قبل 30 دقيقة، وسؤال جاهزية قبل 5 دقائق. إلغاء تلقائي عند عدم الرد.</p>
+      </div>
+    </div>
+
+    <h3>٣. تدفق الرحلة الفورية</h3>
+    <div class="flow">
+      <div class="flow-step">تحديد المسار</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">اختيار الفئة</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step highlight">إرسال الطلب</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">انتظار قبول</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">السائق في الطريق</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">تأكيد الوصول</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step highlight">الرحلة جارية</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">انتهاء + تقييم</div>
+    </div>
+
+    <h3>٤. تقدير السعر قبل الحجز</h3>
+    <div class="formula">السعر = سعر الفتح + (المسافة × سعر الكيلو) + (الدقائق × سعر الدقيقة)</div>
+    <p>يُحسب من مسار OSRM أو Google Directions. يمكن تطبيق <strong>كود خصم</strong> قبل الإرسال. التحصيل <strong>نقداً</strong> عند الوصول.</p>
+
+    <h3>٥. أثناء الرحلة</h3>
+    <ul>
+      <li>تتبع موقع السائق على الخريطة كل 12–14 ثانية</li>
+      <li>تأكيد وصول السائق عند وصوله</li>
+      <li>عرض العداد الحي أثناء مرحلة Running</li>
+      <li>الاتصال بالسائق مباشرة من التطبيق</li>
+      <li>إلغاء مسموح قبل بدء الرحلة (Pending / Reserved / DriverArrived)</li>
+    </ul>
+  </div>
+  <div class="footer-note">سوريا تاكسي — GS Taxi &nbsp;|&nbsp; مسار الراكب</div>
+</div>
+
+<!-- صفحة 4: مسار السائق -->
+<div class="page">
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">🚕 سوريا تاكسي — GS Taxi</div>
+      <div class="page-num">٤</div>
+    </div>
+
+    <h2>مسار السائق — من الاتصال إلى إنهاء الرحلة</h2>
+
+    <h3>١. الدخول والجاهزية</h3>
+    <ul>
+      <li>يُنشَأ حساب السائق من لوحة الإدارة (لا يوجد تسجيل ذاتي للسائقين)</li>
+      <li>زر <strong>«اسحب للبدء»</strong> يفعّل وضع المتصل — يبدأ تتبع GPS وإرسال الموقع للخادم</li>
+      <li>إغلاق التطبيق <strong>لا يقطع</strong> الاتصال — يبقى أونلاين حتى الإيقاف اليدوي</li>
+      <li>يحتاج إذن «الموقع طوال الوقت» على أندرويد للعمل في الخلفية</li>
+    </ul>
+
+    <h3>٢. استقبال الطلبات</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>مصادر الطلب</h4>
+        <ul>
+          <li>إشعار FCM فوري</li>
+          <li>استطلاع موحّد كل 5–6 ثوانٍ</li>
+          <li>حوار منبثق للطلب الفوري</li>
+        </ul>
+      </div>
+      <div class="card navy">
+        <h4>الإجراءات</h4>
+        <ul>
+          <li><strong>قبول</strong> — أول سائق يفوز</li>
+          <li><strong>رفض/تجاهل</strong> — يختفي من القائمة</li>
+          <li><strong>إلغاء أثناء التوجه</strong> — قبل الوصول للراكب</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>٣. مراحل تنفيذ الرحلة</h3>
+    <div class="flow">
+      <div class="flow-step highlight">قبول</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">Reserved<br><small>متجه للراكب</small></div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">وصلت للراكب</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">DriverArrived</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step highlight">Running</div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-step">إنهاء الرحلة</div>
+    </div>
+
+    <h3>٤. العدادان</h3>
+    <table>
+      <tr><th>النوع</th><th>متى يُستخدم</th><th>مصدر الأسعار</th></tr>
+      <tr>
+        <td><strong>عداد رحلة التطبيق</strong></td>
+        <td>أثناء Running لطلب من التطبيق</td>
+        <td>أسعار فئة السيارة</td>
+      </tr>
+      <tr>
+        <td><strong>العداد الحر</strong></td>
+        <td>رحلة شارع بدون طلب تطبيق</td>
+        <td>إعدادات لوحة التحكم</td>
+      </tr>
+    </table>
+    <p>لا يمكن تشغيل العدادين معاً. قبول طلب تطبيق يُوقف العداد الحر تلقائياً.</p>
+
+    <h3>٥. SOS — الطوارئ</h3>
+    <p>زر SOS يرسل موقع السائق فوراً للوحة الإدارة. يظهر تنبيه أحمر للمسؤول حتى يُغلق يدوياً.</p>
+  </div>
+  <div class="footer-note">سوريا تاكسي — GS Taxi &nbsp;|&nbsp; مسار السائق</div>
+</div>
+
+<!-- صفحة 5: حالات الطلب + العداد -->
+<div class="page">
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">🚕 سوريا تاكسي — GS Taxi</div>
+      <div class="page-num">٥</div>
+    </div>
+
+    <h2>حالات الطلب (Trip Statuses)</h2>
+    <div class="status-chain">
+      <span>Pending</span> ← قبول ←
+      <span>Reserved</span> ← وصول ←
+      <span>DriverArrived</span> ← تأكيد ←
+      <span>AwaitingDestination</span> ←
+      <span>Running</span> ← إنهاء ←
+      <span class="final">Finished</span>
+      &nbsp;&nbsp;|&nbsp;&nbsp; إلغاء في أي مرحلة ← <span class="removed">Removed</span>
+    </div>
+
+    <table>
+      <tr><th>الحالة</th><th>المعنى</th><th>على الخريطة؟</th></tr>
+      <tr><td>Pending</td><td>بانتظار قبول سائق</td><td>فوري: نعم</td></tr>
+      <tr><td>Reserved</td><td>تم القبول — السائق في الطريق</td><td>نعم</td></tr>
+      <tr><td>DriverArrived</td><td>السائق وصل — بانتظار تأكيد الراكب</td><td>نعم</td></tr>
+      <tr><td>AwaitingDestination</td><td>بانتظار تحديد الوجهة</td><td>نعم</td></tr>
+      <tr><td>Running</td><td>الرحلة جارية — عداد + تتبع حي</td><td>نعم</td></tr>
+      <tr><td>Finished</td><td>انتهت — تكلفة نهائية + تقييم</td><td>لا</td></tr>
+      <tr><td>Removed</td><td>ملغاة</td><td>لا</td></tr>
+    </table>
+
+    <h2>منطق العداد الحر</h2>
+    <div class="formula">عند البدء: التكلفة = سعر الفتح</div>
+    <div class="formula">أثناء الحركة: + (المسافة بالكم × سعر الكيلو)</div>
+    <div class="formula">أثناء التوقف: كل 60 ثانية → + سعر دقيقة الوقوف</div>
+
+    <div class="two-col">
+      <div>
+        <h3>قواعد GPS الذكية</h3>
+        <ul>
+          <li>يُحسب فقط عند حركة حقيقية (≥ 5م أو سرعة ≥ 1.5 كم/س)</li>
+          <li>يُرفض انجراف GPS أثناء التوقف</li>
+          <li>يُرفض القفزات الكبيرة (&gt; 200م في تحديث واحد)</li>
+          <li>مهلة 3 ثوانٍ بعد الحركة قبل عد الوقوف</li>
+          <li>يستمر العد في الخلفية (مكالمات، تطبيقات أخرى)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>الإعداد من الإدارة</h3>
+        <ul>
+          <li><strong>سعر الفتح</strong> — يُضاف فور البدء</li>
+          <li><strong>سعر الكيلومتر</strong></li>
+          <li><strong>سعر دقيقة الوقوف</strong></li>
+        </ul>
+        <p style="font-size:10pt;color:#64748b">يُعرض للسائق: التكلفة + الكيلو + الزمن + دقائق الوقوف مع إيصال نهائي.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">سوريا تاكسي — GS Taxi &nbsp;|&nbsp; حالات الطلب والعداد</div>
+</div>
+
+<!-- صفحة 6: الإدارة والإشعارات -->
+<div class="page">
+  <div class="content">
+    <div class="page-header">
+      <div class="brand">🚕 سوريا تاكسي — GS Taxi</div>
+      <div class="page-num">٦</div>
+    </div>
+
+    <h2>لوحة الإدارة</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h4>📊 لوحة المؤشرات</h4>
+        <p>إجمالي السائقين والزبائن، إيرادات اليوم وآخر 30 يوماً، طلبات نشطة، تنبيهات SOS.</p>
+      </div>
+      <div class="card navy">
+        <h4>🗺️ خريطة العمليات</h4>
+        <p>عرض حي لمواقع السائقين والطلبات النشطة على الخريطة.</p>
+      </div>
+      <div class="card navy">
+        <h4>👥 إدارة السائقين</h4>
+        <p>إضافة/تعديل/حذف سائقين، فئات السيارة، التسعير، إعدادات العداد الحر.</p>
+      </div>
+      <div class="card">
+        <h4>📋 الطلبات والتقارير</h4>
+        <p>متابعة الطلبات، تصدير CSV، تقرير مالي PDF/Excel، آراء الراكبين.</p>
+      </div>
+      <div class="card">
+        <h4>🎟️ الخصومات</h4>
+        <p>إنشاء كوبونات خصم وإشعار الزبائن بها.</p>
+      </div>
+      <div class="card navy">
+        <h4>🆘 تنبيهات SOS</h4>
+        <p>استقبال تنبيهات طوارئ السائقين وإغلاقها بعد المعالجة.</p>
+      </div>
+    </div>
+
+    <h3>صلاحيات الموظفين</h3>
+    <p>يمكن للمسؤول إنشاء موظفين بصلاحيات محددة: عرض/تعديل السائقين، الطلبات، المناطق، التقارير، الخصومات.</p>
+
+    <h2>نظام الإشعارات (FCM)</h2>
+    <table>
+      <tr><th>نوع الإشعار</th><th>المستلم</th><th>الإجراء</th></tr>
+      <tr><td>طلب فوري جديد</td><td>السائق</td><td>صوت تنبيه + حوار قبول/رفض</td></tr>
+      <tr><td>قبول الرحلة</td><td>الراكب</td><td>إشعار + تحديث الحالة</td></tr>
+      <tr><td>وصول السائق</td><td>الراكب</td><td>طلب تأكيد الوصول</td></tr>
+      <tr><td>جاهزية الراكب (مسبق)</td><td>السائق</td><td>بدء الرحلة أو تأجيل</td></tr>
+      <tr><td>طلب أُخذ من سائق آخر</td><td>السائق</td><td>إشعار + إغلاق الحوار</td></tr>
+      <tr><td>انتهاء الرحلة</td><td>الراكب</td><td>شاشة النتيجة + تقييم</td></tr>
+    </table>
+
+    <h2>ملخص API الرئيسية</h2>
+    <div class="two-col">
+      <ul>
+        <li><code>POST /requests/store</code> — إنشاء طلب</li>
+        <li><code>POST /requests/{id}/accept</code> — قبول</li>
+        <li><code>POST /requests/{id}/finish</code> — إنهاء</li>
+        <li><code>GET /driver/poll-snapshot</code> — استطلاع موحّد</li>
+      </ul>
+      <ul>
+        <li><code>POST /drivers/updateLocation</code> — موقع السائق</li>
+        <li><code>GET /requests/{id}/trip-tracking</code> — تتبع حي</li>
+        <li><code>POST /emergency/sos</code> — طوارئ</li>
+        <li><code>GET /reports/dashboard-summary</code> — لوحة الإدارة</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-note">سوريا تاكسي — GS Taxi &nbsp;|&nbsp; الإدارة والإشعارات &nbsp;|&nbsp; gstaxi.online</div>
+</div>
+
+</body>
+</html>

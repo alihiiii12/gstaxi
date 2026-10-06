@@ -1,0 +1,3 @@
+GS Taxi site admin v3
+2026-08-15
+If this file opens in the browser, the new upload succeeded.

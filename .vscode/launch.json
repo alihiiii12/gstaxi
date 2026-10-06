@@ -1,0 +1,100 @@
+{
+
+  "version": "0.2.0",
+
+  "configurations": [
+
+    {
+
+      "name": "syriataxi — إنتاج (gstaxi.online) ★",
+
+      "request": "launch",
+
+      "type": "dart",
+
+      "program": "lib/main.dart",
+
+      "args": [
+
+        "--dart-define=SYRIATAXI_API_BASE_URL=http://gstaxi.online/api"
+
+      ]
+
+    },
+
+    {
+
+      "name": "syriataxi — إنتاج (IP VPS)",
+
+      "request": "launch",
+
+      "type": "dart",
+
+      "program": "lib/main.dart",
+
+      "args": [
+
+        "--dart-define=SYRIATAXI_API_BASE_URL=http://72.62.2.152/api"
+
+      ]
+
+    },
+
+    {
+
+      "name": "syriataxi — XAMPP محلي (هاتف)",
+
+      "request": "launch",
+
+      "type": "dart",
+
+      "program": "lib/main.dart",
+
+      "args": [
+
+        "--dart-define=SYRIATAXI_API_BASE_URL=http://192.168.1.114/SyriaTaxi-main/public/api"
+
+      ]
+
+    },
+
+    {
+
+      "name": "syriataxi — XAMPP محلي (محاكي)",
+
+      "request": "launch",
+
+      "type": "dart",
+
+      "program": "lib/main.dart",
+
+      "args": [
+
+        "--dart-define=SYRIATAXI_API_BASE_URL=http://10.0.2.2/SyriaTaxi-main/public/api"
+
+      ]
+
+    },
+
+    {
+
+      "name": "syriataxi — XAMPP محلي (localhost)",
+
+      "request": "launch",
+
+      "type": "dart",
+
+      "program": "lib/main.dart",
+
+      "args": [
+
+        "--dart-define=SYRIATAXI_API_BASE_URL=http://localhost/SyriaTaxi-main/public/api"
+
+      ]
+
+    }
+
+  ]
+
+}
+

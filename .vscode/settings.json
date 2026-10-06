@@ -1,0 +1,8 @@
+{
+  "java.import.gradle.enabled": false,
+  "java.autobuild.enabled": false,
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "java.gradle.buildServer.enabled": "off",
+  "gradle.autoDetect": "off",
+  "gradle.allowParallelRun": false
+}
